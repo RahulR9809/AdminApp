@@ -9,3 +9,5 @@ final class ButtonClickedEvent extends LoginEvent{
 
   ButtonClickedEvent({required this.username, required this.password});
 }
+
+class AuthCheckingEvent extends LoginEvent{}

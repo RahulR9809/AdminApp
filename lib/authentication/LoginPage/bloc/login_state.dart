@@ -14,3 +14,6 @@ final class ErrorState extends LoginState {
 
   ErrorState({required this.errorMessage});
 }
+
+class AuthenticatedState extends LoginState{}
+class UnauthenticatedState extends LoginState{}
