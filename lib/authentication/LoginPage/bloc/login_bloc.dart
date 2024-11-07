@@ -37,11 +37,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(AuthenticatedState());
       } else {
         emit(UnauthenticatedState()); // Ensure UnauthenticatedState is emitted
-        print('Error: No token found');
       }
     } catch (e) {
       emit(ErrorState(errorMessage: 'An error occurred while checking authentication'));
-      print('Exception caught: $e');
     }
   },
 );

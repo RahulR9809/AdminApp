@@ -9,7 +9,7 @@ class FetchDrivers extends DriverEvent{}
 class FetchDriverDetails extends DriverEvent{
   final String driverId;
 
-  FetchDriverDetails(this.driverId);
+  FetchDriverDetails(this.driverId,);
 }
 
 

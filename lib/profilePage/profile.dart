@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:rideadmin/authentication/LoginPage/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
-
   Future<void> logout(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('auth_token'); 
     Navigator.pushReplacement(
       // ignore: use_build_context_synchronously
       context,
-      MaterialPageRoute(builder: (context) =>  Login()),
+      MaterialPageRoute(builder: (context) =>  const Login()),
     );
   }
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {

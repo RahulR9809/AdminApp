@@ -1,4 +1,5 @@
 // driver_api_service.dart
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,105 +9,115 @@ class DriverApiService {
 
   // Method to get all drivers
   static Future<List<dynamic>> getAllDrivers() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('auth_token');
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('auth_token');
 
-    final response = await http.get(
-      Uri.parse('$baseUrl/getAllDrivers'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
-    if (response.statusCode == 200) {
-      final  data = json.decode(response.body);
-           print("Driver details fetched: $data");
+      final response = await http.get(
+        Uri.parse('$baseUrl/getAllDrivers'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
 
-      // Extract and return the driverDetails list
-      return data['driverDetails'];
-    } else {
-      throw Exception('Failed to load drivers');
-    }
-  }
-
-static Future<Map<String, dynamic>> getDriverDetails(String driverId) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  final token = prefs.getString('auth_token');
-
-  // print("Token retrieved: $token");
-
-  final response = await http.get(
-    Uri.parse('$baseUrl/viewDriver-Detail/$driverId'),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    },
-  );
-  if (response.statusCode == 200) {
-    final data = json.decode(response.body);
-    // print("Driver details fetched: $data");
-
-    // Access `vehicleDetails` within `driverDetails`
-    final driverDetails = data['driverDetails'];
-    if (driverDetails != null) {
-      final vehicleDetails = driverDetails['vehicleDetails'];
-
-      if (vehicleDetails != null) {
-        return data;
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        // Extract and return the driverDetails list
+        return data['driverDetails'];
       } else {
-        print("No vehicle details found.");
-        return {}; // Return an empty map if `vehicleDetails` is null
+        throw Exception('Failed to load drivers');
       }
-    } else {
-      print("No driver details found.");
-      return {}; // Return an empty map if `driverDetails` is null
+    } catch (e) {
+      throw Exception('Failed to load drivers: $e');
     }
-  } else {
-    print("Failed to load driver details. Status Code: ${response.statusCode}");
-    throw Exception('Failed to load driver details');
   }
-}
 
+  static Future<Map<String, dynamic>> getDriverDetails(String driverId) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('auth_token');
 
+      final response = await http.get(
+        Uri.parse('$baseUrl/viewDriver-Detail/$driverId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
 
-Future<void>acceptDriver(String driverId ,)async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-  final token = prefs.getString('auth_token');
-    // print('hre erwrwrww er werr     ewr${token}');
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final driverDetails = data['driverDetails'];
+        if (driverDetails != null) {
+          final vehicleDetails = driverDetails['vehicleDetails'];
 
-
-  final response=await http.patch(Uri.parse('$baseUrl/approveDriver/$driverId'),
-  headers: {'Content-Type':'application/json',
-  'Authorization': 'Bearer $token'
-  },
-  );
-
-  if(response.statusCode ==200){
-          print('success'); // Log the response body for debugging
-    final data = json.decode(response.body);
-    print("Driver details fetched: $data");
-  }else{
-    throw Exception('failed to accept driver');
-
+          if (vehicleDetails != null) {
+            return data;
+          } else {
+            return {};
+          }
+        } else {
+          return {};
+        }
+      } else {
+        throw Exception('Failed to load driver details');
+      }
+    } catch (e) {
+      throw Exception('Failed to load driver details: $e');
+    }
   }
-}
 
-Future<void>blocunblocDriver(String driverId,bool isBlocked)async{
-   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final token = prefs.getString('auth_token');
-  final response=await http.patch(Uri.parse('$baseUrl/blockUnblockDrivers/$driverId'),
-  headers: {'Content-Type':'application/json',
- 'Authorization': 'Bearer $token'
-  
-  },
-  // body: jsonEncode({'isBlocked':isBlocked})
-  );
-  if(response.statusCode!=200){
-          // print('Error: ${response.body}'); // Log the response body for debugging
+  Future<void> acceptDriver(String driverId) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('auth_token');
 
-      throw Exception('Failed to update block status');
+      final response = await http.patch(
+        Uri.parse('$baseUrl/approveDriver/$driverId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (kDebugMode) {
+          print("Driver details fetched: $data");
+        }
+      } else {
+        throw Exception('Failed to accept driver');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error in acceptDriver: $e');
+      }
+      throw Exception('Failed to accept driver: $e');
+    }
   }
-}
 
+  Future<void> blocunblocDriver(String driverId, bool isBlocked) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('auth_token');
+      final response = await http.patch(
+        Uri.parse('$baseUrl/blockUnblockDrivers/$driverId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        // body: jsonEncode({'isBlocked': isBlocked})
+      );
 
+      if (response.statusCode != 200) {
+        throw Exception('Failed to update block status');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error in blocunblocDriver: $e');
+      }
+      throw Exception('Failed to update block status: $e');
+    }
+  }
 }

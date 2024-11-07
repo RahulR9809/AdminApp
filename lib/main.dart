@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DriverBloc(driverApiService: DriverApiService())..add(FetchDrivers()),
+          lazy: false,
         ),
       ],
       child: MaterialApp(
@@ -33,15 +34,13 @@ class MyApp extends StatelessWidget {
         home: BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
             if (state is AuthenticatedState) {
-              return DriverListScreen();
+              return const DriverListScreen();
             } else if (state is UnauthenticatedState) {
-              return Login();
+              return const Login();
             } else if (state is LoadingState) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is LoadedState) {
-              return DriverListScreen();
             }
-            return Login();
+            return const Login();
           },
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rideadmin/authentication/LoginPage/login.dart';
 import 'package:rideadmin/drivers_list.dart/bloc/driver_bloc.dart';
 import 'package:rideadmin/drivers_list.dart/driver_details.dart';
+import 'package:rideadmin/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DriverListScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class _DriverListScreenState extends State<DriverListScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('auth_token');
     Navigator.pushReplacement(
+      // ignore: use_build_context_synchronously
       context,
       MaterialPageRoute(builder: (context) => const Login()),
     );
@@ -25,26 +27,28 @@ class _DriverListScreenState extends State<DriverListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => logout(context),
-          icon: const Icon(Icons.arrow_back),
-        ),
-        title: const Text('Drivers List'),
-        backgroundColor: Colors.blueGrey[900],
-      ),
+      appBar: CustomAppBar(
+          title: 'Drivers List',
+          onLeadingPressed: () => logout(context),
+          backgroundColor: Colors.blueGrey,
+          icons: const Icon(Icons.arrow_back)),
       body: BlocBuilder<DriverBloc, DriverState>(
         builder: (context, state) {
           if (state is DriverLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is DriverDetailLoaded) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.of(context).push(MaterialPageRoute(
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
                 builder: (context) => DriverDetailsPage(
                   driverDetails: state.driverDetails,
                   vehicleDetails: state.vehicleDetails,
                 ),
-              ));
+              ))
+                  .then((_) {
+                // Reset state to DriverListLoaded after coming back
+                context.read<DriverBloc>().add(FetchDrivers());
+              });
             });
           } else if (state is DriverListLoaded) {
             return ListView.builder(
@@ -91,23 +95,31 @@ class _DriverListScreenState extends State<DriverListScreen> {
                         Row(
                           children: [
                             Icon(
-                              driver['isAccepted'] == false
-                                  ? Icons.pending
-                                  : Icons.check_circle,
-                              color: driver['isAccepted'] == false
-                                  ? Colors.orange
-                                  : Colors.green,
+                              driver['isBlocked'] == true
+                                  ? Icons.block
+                                  : (driver['isAccepted'] == false
+                                      ? Icons.pending
+                                      : Icons.check_circle),
+                              color: driver['isBlocked'] == true
+                                  ? Colors.red
+                                  : (driver['isAccepted'] == false
+                                      ? Colors.orange
+                                      : Colors.green),
                               size: 18,
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              driver['isAccepted'] == false
-                                  ? 'Pending'
-                                  : 'Approved',
+                              driver['isBlocked'] == true
+                                  ? 'Blocked'
+                                  : (driver['isAccepted'] == false
+                                      ? 'Pending'
+                                      : 'Approved'),
                               style: TextStyle(
-                                color: driver['isAccepted'] == false
-                                    ? Colors.orange
-                                    : Colors.green,
+                                color: driver['isBlocked'] == true
+                                    ? Colors.red
+                                    : (driver['isAccepted'] == false
+                                        ? Colors.orange
+                                        : Colors.green),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -119,10 +131,13 @@ class _DriverListScreenState extends State<DriverListScreen> {
                     onTap: () {
                       final driverId = driver['_id'];
                       if (driverId != null) {
-                        context.read<DriverBloc>().add(FetchDriverDetails(driverId));
+                        context
+                            .read<DriverBloc>()
+                            .add(FetchDriverDetails(driverId));
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Driver ID is missing.')),
+                          const SnackBar(
+                              content: Text('Driver ID is missing.')),
                         );
                       }
                     },
