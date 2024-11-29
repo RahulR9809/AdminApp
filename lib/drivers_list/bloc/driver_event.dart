@@ -15,13 +15,16 @@ class FetchDriverDetails extends DriverEvent{
 
 class AcceptDriver extends DriverEvent{
   final String driverId;
-  
-  AcceptDriver( {required this.driverId});
+      final BuildContext context;
+
+  AcceptDriver(this.context,  {required this.driverId});
 }
 
 class BlockUnBlocDriver extends DriverEvent{
   final String driverId;
   final bool isBlocked;
+    final BuildContext context;
 
-  BlockUnBlocDriver({required this.driverId, required this.isBlocked});
+
+  BlockUnBlocDriver(this.context, {required this.driverId, required this.isBlocked});
 }

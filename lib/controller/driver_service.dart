@@ -8,7 +8,11 @@ class DriverApiService {
   static const String baseUrl = 'http://10.0.2.2:3001/api/auth/admin';
 
   // Method to get all drivers
-  static Future<List<dynamic>> getAllDrivers() async {
+static Future<List<dynamic>> getAllDrivers() async {
+  const int maxRetries = 3;
+  int retryCount = 0;
+
+  while (retryCount < maxRetries) {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('auth_token');
@@ -26,12 +30,20 @@ class DriverApiService {
         // Extract and return the driverDetails list
         return data['driverDetails'];
       } else {
-        throw Exception('Failed to load drivers');
+        throw Exception('Failed to load drivers: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Failed to load drivers: $e');
+      retryCount++;
+      if (retryCount >= maxRetries) {
+        throw Exception('Failed to load drivers after $maxRetries attempts: $e');
+      }
+      await Future.delayed(Duration(seconds: 2)); // Optional: delay before retry
     }
   }
+
+  throw Exception('Unexpected error occurred');
+}
+
 
   static Future<Map<String, dynamic>> getDriverDetails(String driverId) async {
     try {
@@ -68,7 +80,7 @@ class DriverApiService {
     }
   }
 
-  Future<void> acceptDriver(String driverId) async {
+  Future<void> acceptDriver(String driverId ) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('auth_token');
@@ -120,4 +132,7 @@ class DriverApiService {
       throw Exception('Failed to update block status: $e');
     }
   }
+
+
+  
 }

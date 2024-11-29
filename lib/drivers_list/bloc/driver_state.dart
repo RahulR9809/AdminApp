@@ -31,3 +31,9 @@ class DriverActionSuccess extends DriverState{
 
   DriverActionSuccess( this.message);
 }
+
+class DriverButtonState extends DriverState {
+  final bool isAccepted;
+  final bool isBlocked;
+  DriverButtonState({required this.isAccepted, required this.isBlocked});
+}
