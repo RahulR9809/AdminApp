@@ -37,3 +37,6 @@ class DriverButtonState extends DriverState {
   final bool isBlocked;
   DriverButtonState({required this.isAccepted, required this.isBlocked});
 }
+
+
+

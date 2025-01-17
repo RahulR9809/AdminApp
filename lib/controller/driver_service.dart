@@ -28,6 +28,7 @@ static Future<List<dynamic>> getAllDrivers() async {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         // Extract and return the driverDetails list
+    
         return data['driverDetails'];
       } else {
         throw Exception('Failed to load drivers: ${response.statusCode}');

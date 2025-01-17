@@ -13,3 +13,11 @@ class BlockUnblockUserEvent extends UserEvent {
 
   BlockUnblockUserEvent({required this.userId, required this.isBlocked});
 }
+
+
+class SearchFilterUsers extends UserEvent {
+  final String searchQuery;
+  final String selectedStatus;
+
+  SearchFilterUsers({required this.searchQuery, required this.selectedStatus});
+}

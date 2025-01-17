@@ -62,7 +62,7 @@ class DetailRow extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.title,
-    required this.value,
+    required this.value, 
   }) : super(key: key);
 
   @override
@@ -109,7 +109,7 @@ class SectionHeader extends StatelessWidget {
 class ProfileAvatar extends StatelessWidget {
   final String? imageUrl;
   
-  const ProfileAvatar({Key? key, this.imageUrl}) : super(key: key);
+  const ProfileAvatar({Key? key, this.imageUrl,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

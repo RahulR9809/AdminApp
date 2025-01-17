@@ -28,3 +28,17 @@ class BlockUnBlocDriver extends DriverEvent{
 
   BlockUnBlocDriver(this.context, {required this.driverId, required this.isBlocked});
 }
+
+
+
+
+class SearchDriver extends DriverEvent {
+  final String query;
+  SearchDriver(this.query);
+}
+
+class FilterDriver extends DriverEvent {
+  final String status;
+  final String query;
+  FilterDriver(this.status, this.query);
+}
