@@ -13,13 +13,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TextStyle? titleStyle;
 
   const CustomAppBar({
-    Key? key,
+    super.key,
     required this.title,
     required this.onLeadingPressed,
     this.backgroundColor = Colors.blueAccent,
     required this.icon,
     this.titleStyle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class DetailRow extends StatelessWidget {
 
 class SectionHeader extends StatelessWidget {
   final String title;
-  const SectionHeader({Key? key, required this.title}) : super(key: key);
+  const SectionHeader({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,7 @@ class SectionHeader extends StatelessWidget {
 class ProfileAvatar extends StatelessWidget {
   final String? imageUrl;
   
-  const ProfileAvatar({Key? key, this.imageUrl,}) : super(key: key);
+  const ProfileAvatar({super.key, this.imageUrl,});
 
   @override
   Widget build(BuildContext context) {
@@ -132,11 +132,11 @@ class ImageSection extends StatelessWidget {
   final Function(BuildContext, String?) onImageTap;
 
   const ImageSection({
-    Key? key,
+    super.key,
     required this.title,
     this.imageUrl,
     required this.onImageTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -184,11 +184,11 @@ class ActionButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
   const ActionButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.color,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -213,11 +213,11 @@ class ConfirmationDialog extends StatelessWidget {
   final VoidCallback onConfirm;
 final String content;
   const ConfirmationDialog({
-    Key? key,
+    super.key,
     required this.action,
     required this.onConfirm,
     required this.content
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -235,7 +235,7 @@ final String content;
   onPressed: () {
             onConfirm();
             Navigator.pop(context);
-          },        child: Text(action, style: TextStyle(color: AppColors.teal)),
+          },        child: Text(action, style: const TextStyle(color: AppColors.teal)),
         ),
       ],
     );

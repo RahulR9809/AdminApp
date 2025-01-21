@@ -3,34 +3,31 @@ part of 'driver_bloc.dart';
 @immutable
 sealed class DriverEvent {}
 
-class FetchDrivers extends DriverEvent{}
+class FetchDrivers extends DriverEvent {}
 
-
-class FetchDriverDetails extends DriverEvent{
+class FetchDriverDetails extends DriverEvent {
   final String driverId;
 
-  FetchDriverDetails(this.driverId,);
+  FetchDriverDetails(
+    this.driverId,
+  );
 }
 
-
-class AcceptDriver extends DriverEvent{
+class AcceptDriver extends DriverEvent {
   final String driverId;
-      final BuildContext context;
+  final BuildContext context;
 
-  AcceptDriver(this.context,  {required this.driverId});
+  AcceptDriver(this.context, {required this.driverId});
 }
 
-class BlockUnBlocDriver extends DriverEvent{
+class BlockUnBlocDriver extends DriverEvent {
   final String driverId;
   final bool isBlocked;
-    final BuildContext context;
+  final BuildContext context;
 
-
-  BlockUnBlocDriver(this.context, {required this.driverId, required this.isBlocked});
+  BlockUnBlocDriver(this.context,
+      {required this.driverId, required this.isBlocked});
 }
-
-
-
 
 class SearchDriver extends DriverEvent {
   final String query;

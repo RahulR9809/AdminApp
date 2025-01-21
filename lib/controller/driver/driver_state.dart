@@ -7,20 +7,18 @@ final class DriverInitial extends DriverState {}
 
 class DriverLoading extends DriverState {}
 
-class DriverListLoaded extends DriverState{
+class DriverListLoaded extends DriverState {
   final List<dynamic> drivers;
-   DriverListLoaded(this.drivers);
+  DriverListLoaded(this.drivers);
 }
 
+class DriverDetailLoaded extends DriverState {
+  final Map<String, dynamic> driverDetails;
+  final Map<String, dynamic> vehicleDetails;
 
-class DriverDetailLoaded extends DriverState{
-  final Map<String,dynamic> driverDetails;
-  final Map<String,dynamic> vehicleDetails;
-
-  DriverDetailLoaded({required this.driverDetails, required this.vehicleDetails});
+  DriverDetailLoaded(
+      {required this.driverDetails, required this.vehicleDetails});
 }
-
- 
 
 class DriverError extends DriverState {
   final String message;
@@ -28,10 +26,10 @@ class DriverError extends DriverState {
   DriverError(this.message);
 }
 
-class DriverActionSuccess extends DriverState{
+class DriverActionSuccess extends DriverState {
   final String message;
 
-  DriverActionSuccess( this.message);
+  DriverActionSuccess(this.message);
 }
 
 class DriverButtonState extends DriverState {
@@ -39,6 +37,3 @@ class DriverButtonState extends DriverState {
   final bool isBlocked;
   DriverButtonState({required this.isAccepted, required this.isBlocked});
 }
-
-
-

@@ -11,7 +11,6 @@ class UserModel {
     required this.isBlocked,
   });
 
-  // Factory method to parse JSON data into a UserModel object
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['_id'] ?? '',
@@ -21,7 +20,6 @@ class UserModel {
     );
   }
 
-  // Method to convert the UserModel object back to JSON
   Map<String, dynamic> toJson() {
     return {
       '_id': id,

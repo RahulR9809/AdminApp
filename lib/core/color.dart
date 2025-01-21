@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -10,7 +9,6 @@ class AppColors {
   static const Color pendingColor = Colors.orange;
   static const Color approvedColor = Colors.green;
 
-  // Added colors
   static const Color lightTeal = Color(0xFFD1F2EB);
   static const Color teal = Colors.teal;
   static const Color successColor = Colors.green;

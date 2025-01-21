@@ -37,7 +37,7 @@ class StatusDialog extends StatelessWidget {
           Text(
             message,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.neutralColor,
               fontSize: 16,
             ),

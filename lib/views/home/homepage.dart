@@ -16,28 +16,26 @@ class AdminHomePage extends StatelessWidget {
     return Scaffold(
         key: _scaffoldKey,
        appBar: CustomAppBar(
-        title: 'Home Page',titleStyle: TextStyle(color: AppColors.white),
+        title: 'Home Page',titleStyle: const TextStyle(color: AppColors.white),
         onLeadingPressed: () {
           _scaffoldKey.currentState?.openDrawer();
         },
         backgroundColor: AppColors.primaryColor,
-        icon: Icon(Icons.menu,color: AppColors.white,), // You can replace with any icon
+        icon: const Icon(Icons.menu,color: AppColors.white,), // You can replace with any icon
       ),
-       drawer: CustomDrawer(), 
+       drawer: const CustomDrawer(), 
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Dashboard Header
-              Text(
+              const Text(
                 "Dashboard Overview",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-              // Metrics Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -61,14 +59,13 @@ class AdminHomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-              // Chart Section
-              Text(
+              const Text(
                 "Trips Overview",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Container(
                 height: 300,
                 decoration: BoxDecoration(
@@ -79,7 +76,7 @@ class AdminHomePage extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.2),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -87,7 +84,7 @@ class AdminHomePage extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: LineChart(
   LineChartData(
-    gridData: FlGridData(show: true),
+    gridData: const FlGridData(show: true),
     titlesData: FlTitlesData(
       leftTitles: AxisTitles(
         sideTitles: SideTitles(
@@ -96,7 +93,7 @@ class AdminHomePage extends StatelessWidget {
           getTitlesWidget: (value, meta) {
             return Text(
               value.toInt().toString(),
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
               ),
@@ -111,7 +108,7 @@ class AdminHomePage extends StatelessWidget {
           getTitlesWidget: (value, meta) {
             return Text(
               'Day ${value.toInt()}',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 12,
               ),
@@ -119,8 +116,8 @@ class AdminHomePage extends StatelessWidget {
           },
         ),
       ),
-      topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-      rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
     ),
     borderData: FlBorderData(
       show: true,
@@ -129,11 +126,11 @@ class AdminHomePage extends StatelessWidget {
     lineBarsData: [
       LineChartBarData(
         spots: [
-          FlSpot(1, 20),
-          FlSpot(2, 30),
-          FlSpot(3, 40),
-          FlSpot(4, 25),
-          FlSpot(5, 50),
+          const FlSpot(1, 20),
+          const FlSpot(2, 30),
+          const FlSpot(3, 40),
+          const FlSpot(4, 25),
+          const FlSpot(5, 50),
         ],
         isCurved: true,
         color: Colors.blue,
@@ -156,7 +153,6 @@ class AdminHomePage extends StatelessWidget {
     );
   }
 
-  // Widget for Metric Cards
   Widget _buildMetricCard({
     required String title,
     required String value,
@@ -165,8 +161,8 @@ class AdminHomePage extends StatelessWidget {
   }) {
     return Expanded(
       child: Container(
-        margin: EdgeInsets.all(8),
-        padding: EdgeInsets.all(16),
+        margin: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
           borderRadius: BorderRadius.circular(10),
@@ -176,15 +172,15 @@ class AdminHomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(icon, color: color, size: 40),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Text(
               value,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],
         ),

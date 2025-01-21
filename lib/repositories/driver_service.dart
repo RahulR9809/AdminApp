@@ -1,4 +1,3 @@
-// driver_api_service.dart
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -7,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DriverApiService {
   static const String baseUrl = 'http://10.0.2.2:3001/api/auth/admin';
 
-  // Method to get all drivers
 static Future<List<dynamic>> getAllDrivers() async {
   const int maxRetries = 3;
   int retryCount = 0;
@@ -27,7 +25,6 @@ static Future<List<dynamic>> getAllDrivers() async {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        // Extract and return the driverDetails list
     
         return data['driverDetails'];
       } else {
@@ -38,7 +35,7 @@ static Future<List<dynamic>> getAllDrivers() async {
       if (retryCount >= maxRetries) {
         throw Exception('Failed to load drivers after $maxRetries attempts: $e');
       }
-      await Future.delayed(Duration(seconds: 2)); // Optional: delay before retry
+      await Future.delayed(const Duration(seconds: 2)); 
     }
   }
 
@@ -124,7 +121,9 @@ static Future<List<dynamic>> getAllDrivers() async {
       );
 
       if (response.statusCode != 200) {
-        print('response of bloc unbloc:${response.body}');
+        if (kDebugMode) {
+          print('response of bloc unbloc:${response.body}');
+        }
         throw Exception('Failed to update block status');
         
       }

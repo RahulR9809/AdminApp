@@ -9,11 +9,11 @@ class CustomBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BottomNavBloc, BottomNavState>(
       builder: (context, state) {
-        int currentIndex = 0; // Default index to home
+        int currentIndex = 0; 
         if (state is BottomNavigationState) {
           currentIndex = state.selectedIndex;
         } else if (state is BottomNavInitial) {
-          currentIndex = 0; // Initial state
+          currentIndex = 0; 
         }
         return BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
@@ -31,9 +31,9 @@ class CustomBottomNavBar extends StatelessWidget {
               label: '',
             ),
           ],
-          currentIndex: currentIndex, // Use the resolved index
+          currentIndex: currentIndex, 
           onTap: (index) {
-            context.read<BottomNavBloc>().add(UpdateTab(index)); // Update tab
+            context.read<BottomNavBloc>().add(UpdateTab(index)); 
           },
           showSelectedLabels: false,
           showUnselectedLabels: false,

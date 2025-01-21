@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ part 'driver_state.dart';
 class DriverBloc extends Bloc<DriverEvent, DriverState> {
   final DriverApiService driverApiService;
 
- List<Map<String, dynamic>> originalDrivers = [];
+  List<Map<String, dynamic>> originalDrivers = [];
 
   DriverBloc({required this.driverApiService}) : super(DriverInitial()) {
     on<FetchDrivers>(_onFetchDrivers);
@@ -22,31 +21,34 @@ class DriverBloc extends Bloc<DriverEvent, DriverState> {
     on<FilterDriver>(_onFilterDriver);
   }
 
- FutureOr<void> _onFetchDrivers(FetchDrivers event, Emitter<DriverState> emit) async {
-  emit(DriverLoading());
-  try {
-    final drivers = await DriverApiService.getAllDrivers();
-originalDrivers = List<Map<String, dynamic>>.from(drivers);
-    emit(DriverListLoaded(List.from(originalDrivers))); 
-  } catch (e) {
-    emit(DriverError('Failed to load drivers: $e'));
+  FutureOr<void> _onFetchDrivers(
+      FetchDrivers event, Emitter<DriverState> emit) async {
+    emit(DriverLoading());
+    try {
+      final drivers = await DriverApiService.getAllDrivers();
+      originalDrivers = List<Map<String, dynamic>>.from(drivers);
+      emit(DriverListLoaded(List.from(originalDrivers)));
+    } catch (e) {
+      emit(DriverError('Failed to load drivers: $e'));
+    }
   }
-}
 
-
-  FutureOr<void> _fetchDriverDetails(FetchDriverDetails event, Emitter<DriverState> emit) async {
+  FutureOr<void> _fetchDriverDetails(
+      FetchDriverDetails event, Emitter<DriverState> emit) async {
     emit(DriverLoading());
     try {
       final response = await DriverApiService.getDriverDetails(event.driverId);
       final driverDetails = response['driverDetails'];
       final vehicleDetails = driverDetails['vehicleDetails'];
-      emit(DriverDetailLoaded(driverDetails: driverDetails, vehicleDetails: vehicleDetails));
+      emit(DriverDetailLoaded(
+          driverDetails: driverDetails, vehicleDetails: vehicleDetails));
     } catch (e) {
       emit(DriverError('Failed to load driver details: $e'));
     }
   }
 
-  FutureOr<void> _onAcceptDriver(AcceptDriver event, Emitter<DriverState> emit) async {
+  FutureOr<void> _onAcceptDriver(
+      AcceptDriver event, Emitter<DriverState> emit) async {
     emit(DriverLoading());
     try {
       await driverApiService.acceptDriver(event.driverId);
@@ -66,7 +68,8 @@ originalDrivers = List<Map<String, dynamic>>.from(drivers);
     }
   }
 
-  FutureOr<void> _onBlockUnBlocDriver(BlockUnBlocDriver event, Emitter<DriverState> emit) async {
+  FutureOr<void> _onBlockUnBlocDriver(
+      BlockUnBlocDriver event, Emitter<DriverState> emit) async {
     emit(DriverLoading());
     try {
       await driverApiService.blocunblocDriver(event.driverId, event.isBlocked);
@@ -75,7 +78,9 @@ originalDrivers = List<Map<String, dynamic>>.from(drivers);
       emit(DriverButtonState(isAccepted: true, isBlocked: event.isBlocked));
       StatusDialog.show(
         context: event.context,
-        message: event.isBlocked ? 'Driver blocked successfully.' : 'Driver unblocked successfully.',
+        message: event.isBlocked
+            ? 'Driver blocked successfully.'
+            : 'Driver unblocked successfully.',
       );
     } catch (e) {
       emit(DriverError("Failed to update driver status: $e"));
@@ -85,46 +90,57 @@ originalDrivers = List<Map<String, dynamic>>.from(drivers);
       );
     }
   }
-FutureOr<void> _onSearchDriver(SearchDriver event, Emitter<DriverState> emit) async {
-  final currentState = state;
-  if (currentState is DriverListLoaded) {
-    if (event.query.isEmpty) {
-      // Reset to the original drivers list
-      final originalDrivers = await DriverApiService.getAllDrivers();
-      emit(DriverListLoaded(originalDrivers));
-    } else {
-      // Filter drivers based on query
-      var filteredDrivers = currentState.drivers
-          .where((driver) =>
-              driver['name'].toLowerCase().contains(event.query.toLowerCase()) ||
-              driver['email'].toLowerCase().contains(event.query.toLowerCase()))
-          .toList();
-      emit(DriverListLoaded(filteredDrivers));
+
+  FutureOr<void> _onSearchDriver(
+      SearchDriver event, Emitter<DriverState> emit) async {
+    final currentState = state;
+    if (currentState is DriverListLoaded) {
+      if (event.query.isEmpty) {
+        // Reset to the original drivers list
+        final originalDrivers = await DriverApiService.getAllDrivers();
+        emit(DriverListLoaded(originalDrivers));
+      } else {
+        // Filter drivers based on query
+        var filteredDrivers = currentState.drivers
+            .where((driver) =>
+                driver['name']
+                    .toLowerCase()
+                    .contains(event.query.toLowerCase()) ||
+                driver['email']
+                    .toLowerCase()
+                    .contains(event.query.toLowerCase()))
+            .toList();
+        emit(DriverListLoaded(filteredDrivers));
+      }
     }
   }
-}
-FutureOr<void> _onFilterDriver(FilterDriver event, Emitter<DriverState> emit) {
-  var filteredDrivers = List<Map<String, dynamic>>.from(originalDrivers);
 
-  if (event.status != 'All') {
-    filteredDrivers = filteredDrivers
-        .where((driver) =>
-            driver['isAccepted'] == (event.status == 'Approved') &&
-            driver['isBlocked'] != true)
-        .toList();
-    print('After Status Filter: $filteredDrivers'); 
+  FutureOr<void> _onFilterDriver(
+      FilterDriver event, Emitter<DriverState> emit) {
+    var filteredDrivers = List<Map<String, dynamic>>.from(originalDrivers);
+
+    if (event.status != 'All') {
+      filteredDrivers = filteredDrivers
+          .where((driver) =>
+              driver['isAccepted'] == (event.status == 'Approved') &&
+              driver['isBlocked'] != true)
+          .toList();
+    }
+
+    if (event.query.isNotEmpty) {
+      filteredDrivers = filteredDrivers
+          .where((driver) =>
+              driver['name']
+                  ?.toLowerCase()
+                  .contains(event.query.toLowerCase()) ??
+              false ||
+                  driver['email']
+                      ?.toLowerCase()
+                      .contains(event.query.toLowerCase()) ??
+              false)
+          .toList();
+    }
+
+    emit(DriverListLoaded(filteredDrivers));
   }
-
-  if (event.query.isNotEmpty) {
-    filteredDrivers = filteredDrivers
-        .where((driver) =>
-            driver['name']?.toLowerCase().contains(event.query.toLowerCase()) ?? false ||
-            driver['email']?.toLowerCase().contains(event.query.toLowerCase()) ?? false)
-        .toList();
-    print('After Query Filter: $filteredDrivers'); // Debugging
-  }
-
-  emit(DriverListLoaded(filteredDrivers));
-}
-
 }

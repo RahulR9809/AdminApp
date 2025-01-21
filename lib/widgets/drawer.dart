@@ -3,14 +3,14 @@ import 'package:rideadmin/core/color.dart';
 import 'package:rideadmin/widgets/widgets.dart';
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({Key? key}) : super(key: key);
+  const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(color: AppColors.primaryColor),
             child: Center(
               child: Text(
@@ -24,33 +24,30 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.dashboard, color: AppColors.primaryColor),
-            title: Text('Dashboard'),
+            leading: const Icon(Icons.dashboard, color: AppColors.primaryColor),
+            title: const Text('Dashboard'),
             onTap: () {
               Navigator.pop(context);
-              // Handle navigation to Dashboard
             },
           ),
           ListTile(
-            leading: Icon(Icons.person, color: AppColors.primaryColor),
-            title: Text('Manage Drivers'),
+            leading: const Icon(Icons.person, color: AppColors.primaryColor),
+            title: const Text('Manage Drivers'),
             onTap: () {
               Navigator.pop(context);
-              // Handle navigation to Driver Management
             },
           ),
           ListTile(
-            leading: Icon(Icons.car_rental, color: AppColors.primaryColor),
-            title: Text('Trips Overview'),
+            leading: const Icon(Icons.car_rental, color: AppColors.primaryColor),
+            title: const Text('Trips Overview'),
             onTap: () {
               Navigator.pop(context);
-              // Handle navigation to Trips Overview
             },
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.logout, color: Colors.redAccent),
-            title: Text('Logout'),
+            leading: const Icon(Icons.logout, color: Colors.redAccent),
+            title: const Text('Logout'),
             onTap: () {
               showDialog(
                 context: context,
@@ -58,7 +55,6 @@ class CustomDrawer extends StatelessWidget {
                   return ConfirmationDialog(
                     action: 'logout',
                     onConfirm: () {
-                      // Call your logout function here
                       logout(context);
                     }, content: 'Are you sure you want to log out?',
                   );
