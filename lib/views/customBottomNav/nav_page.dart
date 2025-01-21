@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rideadmin/customBottomNav/bloc/bottom_nav_bloc.dart';
+import 'package:rideadmin/controller/navbar/bottom_nav_bloc.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({super.key});

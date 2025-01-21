@@ -17,4 +17,6 @@ class AppColors {
   static const Color neutralColor = Colors.grey;
   static const Color blackColor=Colors.black;
   static const Color blue=Colors.blue;
+    static const Color white=Colors.white;
+
 }

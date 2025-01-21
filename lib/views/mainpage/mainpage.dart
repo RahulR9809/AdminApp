@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rideadmin/Home/homepage.dart';
-import 'package:rideadmin/customBottomNav/bloc/bottom_nav_bloc.dart';
-import 'package:rideadmin/customBottomNav/nav_page.dart';
-import 'package:rideadmin/drivers_list/drivers.dart';
-import 'package:rideadmin/user_list/user.dart';
+import 'package:rideadmin/views/home/homepage.dart';
+import 'package:rideadmin/controller/navbar/bottom_nav_bloc.dart';
+import 'package:rideadmin/views/customBottomNav/nav_page.dart';
+import 'package:rideadmin/views/driver_list/drivers.dart';
+import 'package:rideadmin/views/user_list/user.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -16,9 +16,9 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final List<Widget> _pages = [
-     AdminHomePage(), // Your home page (index 0)
-    const DriverListScreen(), // Your car page (index 1)
-    const UserListScreen(), // Your profile page (index 2)
+     AdminHomePage(),
+    const DriverListScreen(), 
+    const UserListScreen(), 
   ];
 
   @override
@@ -28,9 +28,9 @@ class _MainPageState extends State<MainPage> {
       child: Scaffold(
         body: BlocBuilder<BottomNavBloc, BottomNavState>(
           builder: (context, state) {
-            int currentIndex = 0; // Default index to home
+            int currentIndex = 0; 
             if (state is BottomNavigationState) {
-              currentIndex = state.selectedIndex; // Current index from state
+              currentIndex = state.selectedIndex; 
             }
             return IndexedStack(
               index: currentIndex,
@@ -39,7 +39,7 @@ class _MainPageState extends State<MainPage> {
           },
         ),
         bottomNavigationBar:
-            const CustomBottomNavBar(), // Add your custom bottom nav bar here
+            const CustomBottomNavBar(),
       ),
     );
   }

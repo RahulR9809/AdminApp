@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:rideadmin/core/color.dart';
 import 'package:rideadmin/widgets/drawer.dart';
 import 'package:rideadmin/widgets/widgets.dart';
  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 class AdminHomePage extends StatelessWidget {
-  // Example data (replace with API integration)
   final int latestTripsCount = 120;
   final String mostActiveDriver = "John Doe";
   final int totalTripsCompleted = 350;
+
+  const AdminHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
        appBar: CustomAppBar(
-        title: 'Home Page',
+        title: 'Home Page',titleStyle: TextStyle(color: AppColors.white),
         onLeadingPressed: () {
-          // Handle drawer open or any other action
           _scaffoldKey.currentState?.openDrawer();
         },
-        backgroundColor: Colors.teal,
-        icon: Icon(Icons.menu), // You can replace with any icon
+        backgroundColor: AppColors.primaryColor,
+        icon: Icon(Icons.menu,color: AppColors.white,), // You can replace with any icon
       ),
        drawer: CustomDrawer(), 
       body: Padding(

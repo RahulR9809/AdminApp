@@ -20,6 +20,8 @@ class DriverDetailLoaded extends DriverState{
   DriverDetailLoaded({required this.driverDetails, required this.vehicleDetails});
 }
 
+ 
+
 class DriverError extends DriverState {
   final String message;
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rideadmin/authentication/LoginPage/login.dart';
+import 'package:rideadmin/views/login/login_screen.dart';
 import 'package:rideadmin/core/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -59,11 +59,11 @@ class DetailRow extends StatelessWidget {
   final String value;
 
   const DetailRow({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.value, 
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

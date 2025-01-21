@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rideadmin/core/color.dart';
 import 'package:rideadmin/widgets/widgets.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -10,7 +11,7 @@ class CustomDrawer extends StatelessWidget {
       child: Column(
         children: [
           DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blueAccent),
+            decoration: BoxDecoration(color: AppColors.primaryColor),
             child: Center(
               child: Text(
                 'Admin Menu',
@@ -23,7 +24,7 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.dashboard, color: Colors.blueAccent),
+            leading: Icon(Icons.dashboard, color: AppColors.primaryColor),
             title: Text('Dashboard'),
             onTap: () {
               Navigator.pop(context);
@@ -31,7 +32,7 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.person, color: Colors.blueAccent),
+            leading: Icon(Icons.person, color: AppColors.primaryColor),
             title: Text('Manage Drivers'),
             onTap: () {
               Navigator.pop(context);
@@ -39,7 +40,7 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.car_rental, color: Colors.blueAccent),
+            leading: Icon(Icons.car_rental, color: AppColors.primaryColor),
             title: Text('Trips Overview'),
             onTap: () {
               Navigator.pop(context);

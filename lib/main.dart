@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rideadmin/authentication/LoginPage/bloc/login_bloc.dart';
-import 'package:rideadmin/authentication/LoginPage/login.dart';
-import 'package:rideadmin/controller/auth_service.dart';
-import 'package:rideadmin/controller/driver_service.dart';
-import 'package:rideadmin/controller/user_service.dart';
-import 'package:rideadmin/customBottomNav/bloc/bottom_nav_bloc.dart';
-import 'package:rideadmin/drivers_list/bloc/driver_bloc.dart';
-import 'package:rideadmin/drivers_list/drivers.dart';
-import 'package:rideadmin/mainpage/mainpage.dart';
-import 'package:rideadmin/user_list/bloc/user_bloc.dart';
+import 'package:rideadmin/controller/login/login_bloc.dart';
+import 'package:rideadmin/repositories/auth_service.dart';
+import 'package:rideadmin/views/login/login_screen.dart';
+import 'package:rideadmin/repositories/driver_service.dart';
+import 'package:rideadmin/repositories/user_service.dart';
+import 'package:rideadmin/controller/navbar/bottom_nav_bloc.dart';
+import 'package:rideadmin/controller/driver/driver_bloc.dart';
+import 'package:rideadmin/views/mainpage/mainpage.dart';
+import 'package:rideadmin/controller/user/user_bloc.dart';
 
 void main() {
   runApp(const MyApp());

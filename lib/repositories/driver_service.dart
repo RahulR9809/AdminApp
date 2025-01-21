@@ -124,7 +124,9 @@ static Future<List<dynamic>> getAllDrivers() async {
       );
 
       if (response.statusCode != 200) {
+        print('response of bloc unbloc:${response.body}');
         throw Exception('Failed to update block status');
+        
       }
     } catch (e) {
       if (kDebugMode) {
@@ -133,7 +135,4 @@ static Future<List<dynamic>> getAllDrivers() async {
       throw Exception('Failed to update block status: $e');
     }
   }
-
-
-  
 }
