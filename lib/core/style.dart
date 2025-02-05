@@ -24,3 +24,4 @@ class AppStyles {
   );
 }
 
+final Ip='10.0.2.2';

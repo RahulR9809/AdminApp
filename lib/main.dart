@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rideadmin/controller/dash/bloc/dash_bloc.dart';
 import 'package:rideadmin/controller/login/login_bloc.dart';
 import 'package:rideadmin/repositories/auth_service.dart';
 import 'package:rideadmin/views/login/login_screen.dart';
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => UserBloc(UserApiService())..add(FetchUsers())
+        ),
+        BlocProvider(
+          create: (context) => DashBloc(),
         )
       ],
       child: MaterialApp(

@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:rideadmin/core/style.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DriverApiService {
-  static const String baseUrl = 'http://10.0.2.2:3001/api/auth/admin';
+  static  String baseUrl = 'http://$Ip:3001/api/auth/admin';
 
 static Future<List<dynamic>> getAllDrivers() async {
   const int maxRetries = 3;
@@ -93,9 +94,9 @@ static Future<List<dynamic>> getAllDrivers() async {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        if (kDebugMode) {
-          print("Driver details fetched: $data");
-        }
+        // if (kDebugMode) {
+        //   print("Driver details fetched: $data");
+        // }
       } else {
         throw Exception('Failed to accept driver');
       }
@@ -121,9 +122,9 @@ static Future<List<dynamic>> getAllDrivers() async {
       );
 
       if (response.statusCode != 200) {
-        if (kDebugMode) {
-          print('response of bloc unbloc:${response.body}');
-        }
+        // if (kDebugMode) {
+        //   print('response of bloc unbloc:${response.body}');
+        // }
         throw Exception('Failed to update block status');
         
       }

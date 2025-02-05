@@ -2,9 +2,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rideadmin/core/style.dart';
 
 class AuthService {
-  String baseUrl = "http://10.0.2.2:3001/api/auth/admin/login";
+  String baseUrl = "http://$Ip:3001/api/auth/admin/login";
 
   Future<String?> login(String email, String password) async {
     final url = Uri.parse(baseUrl);
@@ -32,7 +33,7 @@ class AuthService {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         debugPrint('Login successful: ${data['message']}');
-        return data;
+        return data['accessToken'];
       } else {
         final errorData = json.decode(response.body);
         throw Exception('Failed to log in: ${errorData['message'] ?? 'Unknown error'}');

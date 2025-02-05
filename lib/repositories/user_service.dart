@@ -2,11 +2,12 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:rideadmin/core/style.dart';
 import 'package:rideadmin/model/user_list_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserApiService {
-  static const String baseUrl = 'http://10.0.2.2:3001/api/auth/admin';
+  static String baseUrl = 'http://$Ip:3001/api/auth/admin';
 
   static Future<List<UserModel>> getAllUsers() async {
     const int maxRetries = 3;
@@ -30,17 +31,17 @@ class UserApiService {
           },
         );
 
-        if (kDebugMode) {
-          print('Response status: ${response.statusCode}');
-          print('Response body: ${response.body}');
-        }
+        // if (kDebugMode) {
+        //   print('Response status: ${response.statusCode}');
+        //   print('Response body: ${response.body}');
+        // }
 
         if (response.statusCode == 201) {
           final data = json.decode(response.body);
           List<dynamic> usersJson = data['userDetails'];
-          if (kDebugMode) {
-            print('Parsed user details: $usersJson');
-          }
+          // if (kDebugMode) {
+          //   print('Parsed user details: $usersJson');
+          // }
           return usersJson.map((json) => UserModel.fromJson(json)).toList();
         } else {
           throw Exception('Failed to load users: ${response.statusCode}');
@@ -80,10 +81,10 @@ class UserApiService {
         body: jsonEncode({'isBlocked': isBlocked}),
       );
 
-      if (kDebugMode) {
-        print('Response status: ${response.statusCode}');
-        print('Response body: ${response.body}');
-      }
+      // if (kDebugMode) {
+      //   print('Response status: ${response.statusCode}');
+      //   print('Response body: ${response.body}');
+      // }
 
       if (response.statusCode != 200) {
         throw Exception('Failed to update block/unblock status');
