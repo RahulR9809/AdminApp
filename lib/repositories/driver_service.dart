@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DriverApiService {
-  static  String baseUrl = 'http://$Ip:3001/api/auth/admin';
+  static  String baseUrl = 'http://$ip:3001/api/auth/admin';
 
 static Future<List<dynamic>> getAllDrivers() async {
   const int maxRetries = 3;
@@ -94,9 +94,9 @@ static Future<List<dynamic>> getAllDrivers() async {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        // if (kDebugMode) {
-        //   print("Driver details fetched: $data");
-        // }
+        if (kDebugMode) {
+          print("Driver details fetched: $data");
+        }
       } else {
         throw Exception('Failed to accept driver');
       }

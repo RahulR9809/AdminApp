@@ -7,7 +7,7 @@ import 'package:rideadmin/model/user_list_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserApiService {
-  static String baseUrl = 'http://$Ip:3001/api/auth/admin';
+  static String baseUrl = 'http://$ip:3001/api/auth/admin';
 
   static Future<List<UserModel>> getAllUsers() async {
     const int maxRetries = 3;

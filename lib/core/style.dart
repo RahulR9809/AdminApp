@@ -24,4 +24,4 @@ class AppStyles {
   );
 }
 
-final Ip='10.0.2.2';
+const ip='10.0.2.2';

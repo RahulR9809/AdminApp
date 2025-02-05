@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -56,6 +50,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: CustomAppBar(
@@ -69,31 +66,31 @@ class _AdminHomePageState extends State<AdminHomePage> {
       ),
       drawer: const CustomDrawer(),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(screenWidth * 0.04), // Responsive padding
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "Dashboard Overview",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: screenWidth * 0.06, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 16),
-              DashboardRow(),
-              const SizedBox(height: 24),
-              const Text(
+              SizedBox(height: screenHeight * 0.02),
+              const DashboardRow(),
+              SizedBox(height: screenHeight * 0.03),
+              Text(
                 "Most Active Drivers",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: screenWidth * 0.05, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 16),
-              ActiveDriversSection(),
-              const SizedBox(height: 24),
-              const Text(
+              SizedBox(height: screenHeight * 0.02),
+              const ActiveDriversSection(),
+              SizedBox(height: screenHeight * 0.03),
+              Text(
                 "Trips Overview",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: screenWidth * 0.05, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 16),
-              TripsOverviewSection(),
+              SizedBox(height: screenHeight * 0.02),
+              const TripsOverviewSection(),
             ],
           ),
         ),
@@ -124,18 +121,19 @@ class DashboardRow extends StatelessWidget {
             color: Colors.blue,
           ),
         ),
-        _buildMetricCard(
-          title: 'Total Trips',
-          value: context.select((DashBloc bloc) {
-            final state = bloc.state;
-            if (state is DashLoaded) {
-              return state.totalTripsCompleted?['data'].toString() ??
-                  'NA';
-            }
-            return 'Loading...';
-          }),
-          icon: Icons.check_circle,
-          color: Colors.purple,
+        Expanded(
+          child: _buildMetricCard(
+            title: 'Total Trips',
+            value: context.select((DashBloc bloc) {
+              final state = bloc.state;
+              if (state is DashLoaded) {
+                return state.totalTripsCompleted?['data'].toString() ?? 'NA';
+              }
+              return 'Loading...';
+            }),
+            icon: Icons.check_circle,
+            color: Colors.purple,
+          ),
         ),
       ],
     );
@@ -147,33 +145,32 @@ class DashboardRow extends StatelessWidget {
     required IconData icon,
     required Color color,
   }) {
-    return Expanded(
-      child: Container(
-        margin: const EdgeInsets.all(8),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: color.withOpacity(0.6)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(icon, color: color, size: 40),
-            const SizedBox(height: 10),
-            Text(title,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 5),
-            Text(value,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          ],
-        ),
+    return Container(
+      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: color.withOpacity(0.6)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(icon, color: color, size: 40),
+          const SizedBox(height: 10),
+          Text(title,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 5),
+          Text(value,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        ],
       ),
     );
   }
 }
+
+
+
 
 class ActiveDriversSection extends StatelessWidget {
   const ActiveDriversSection({super.key});
@@ -260,6 +257,7 @@ class TripsOverviewSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
       height: 300,
       decoration: BoxDecoration(
@@ -275,7 +273,7 @@ class TripsOverviewSection extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(screenWidth * 0.04), // Responsive padding
         child: BlocBuilder<DashBloc, DashState>(
           builder: (context, state) {
             if (state is DashLoading) {
